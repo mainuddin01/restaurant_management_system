@@ -1,0 +1,145 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+  <!-- Slik stylesheet -->
+  <link href="{% static 'css/plugins/slick/slick.css' %}" rel="stylesheet">
+  <link href="{% static 'css/plugins/slick/slick-theme.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>E-commerce product list</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index-2.html">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a>E-commerce</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Product list</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox product-detail">
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-md-5">
+
+
+                            <div class="product-images">
+
+                                <div>
+                                    <div class="image-imitation">
+                                        [IMAGE 1]
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="image-imitation">
+                                        [IMAGE 2]
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="image-imitation">
+                                        [IMAGE 3]
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-7">
+
+                            <h2 class="font-bold m-b-xs">
+                                {{ object.name }}
+                            </h2>
+                            <small>Many desktop publishing packages and web page editors now.</small>
+                            <hr>
+                            <div>
+                                <button class="btn btn-primary float-right">Add to cart</button>
+                                <h1 class="product-main-price">$406,602 <small class="text-muted">Exclude Tax</small> </h1>
+                            </div>
+                            <hr>
+                            <h4>Product description</h4>
+
+                            <div class="small text-muted">
+                                {{ object.description }}
+                            </div>
+                            <dl class="row m-t-md small">
+                                <dt class="col-md-4 text-right">Description lists</dt>
+                                <dd class="col-md-8">A description list is perfect for defining terms.</dd>
+                                <dt class="col-md-4 text-right">Euismod</dt>
+                                <dd class="col-md-8">Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.<br/>Donec id elit non mi porta gravida at eget metus.</dd>
+                                <dt class="col-md-4 text-right">Malesuada porta</dt>
+                                <dd class="col-md-8">Etiam porta sem malesuada magna mollis euismod.</dd>
+                                <dt class="col-md-4 text-right">Felis euismod semper eget</dt>
+                                <dd class="col-md-8">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
+                            </dl>
+                            <div class="text-right">
+                                <div class="btn-group">
+                                    <button class="btn btn-white btn-sm"><i class="fa fa-star"></i> Add to wishlist </button>
+                                    <button class="btn btn-white btn-sm"><i class="fa fa-envelope"></i> Contact with author </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ibox-footer">
+                    <span class="float-right">
+                        Full stock - <i class="fa fa-clock-o"></i> 14.04.2016 10:04 pm
+                    </span>
+                    The generated Lorem Ipsum is therefore always free
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+{% block javascript %}
+  <!-- slick carousel-->
+  <script src="{% static 'js/plugins/slick/slick.min.js' %}"></script>
+
+  <script>
+      $(document).ready(function(){
+
+
+          $('.product-images').slick({
+              dots: true
+          });
+
+      });
+
+  </script>
+{% endblock %}

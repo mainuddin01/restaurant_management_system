@@ -1,0 +1,19 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<h1>Homepage</h1>
+{% if user.is_authenticated %}
+<p>Hi {{ user.username }}</p>
+{% if user.photo %}
+<img src="{{ user.photo.url }}" alt="">
+{% endif %}
+<p>{% if request.user.is_restaurant_manager %}You're not a Kitchen Manager!{% elif request.user.is_kitchen_manager %}You're a Kitchen Manager :){% endif %}</p>
+<p><a href="{% url 'employee_profiles:logout' %}">Log out</a></p>
+{% else %}
+<p><a href="{% url 'employee_profiles:create' %}">Sign Up</a></p>
+<p><a href="{% url 'employee_profiles:login' %}">Log In</a></p>
+{% endif %}
+
+
+{% endblock %}
