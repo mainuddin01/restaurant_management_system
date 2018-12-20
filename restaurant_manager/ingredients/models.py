@@ -1,6 +1,8 @@
 from django.db import models
+from django.db.models.signals import pre_save
 from django.conf import settings
 from django.utils.text import slugify
+from django.core.urlresolvers import reverse
 
 # from products.models import Unit
 
@@ -12,8 +14,23 @@ class Ingredient(models.Model):
     unit = models.ForeignKey('products.Unit')
     category = models.ManyToManyField('IngredientCategory')
 
+    # it'll cause recursion error
+    # def save(self, *args, **kwargs):
+    #     super(Ingredient, self).save(*args, **kwargs)
+    #     self.slug = slugify(self.name)
+    #     self.save()
+
+    def get_absolute_url(self):
+        return reverse('ingredients:detail', kwargs={'slug': self.slug})
+
     def __str__(self):
         return self.name
+
+
+def ingredient_pre_save_receiver(sender, instance, *args, **kwargs):
+    instance.slug = slugify(instance.name)
+
+pre_save.connect(ingredient_pre_save_receiver, sender=Ingredient)
 
 
 class IngredientCategory(models.Model):
@@ -21,6 +38,13 @@ class IngredientCategory(models.Model):
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(null=True, blank=True, unique=True)
     parent_category = models.ForeignKey('IngredientCategory', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(IngredientCategory, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('ingredients:category_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name

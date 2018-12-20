@@ -18,3 +18,30 @@ class ProductForm(forms.ModelForm):
     class Meta():
         model = Product
         exclude = ('slug',)
+
+
+class ProductImageForm(forms.ModelForm):
+
+    class Meta():
+        model = ProductImage
+        fields = ('__all__')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['product'].widget.attrs.update({'class': 'form-control'})
+
+
+class ProductCategoryForm(forms.ModelForm):
+
+    class Meta():
+        model = ProductCategory
+        exclude = ('slug',)
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control'})
+        self.fields['parent_category'].widget.attrs.update({'class': 'form-control'})
+
+        self.fields['parent_category'].required = False

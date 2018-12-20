@@ -73,11 +73,55 @@
                 <!-- <li>
                     <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
                 </li> -->
+                <!-- <li>
+                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Products</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{% url 'products:list' %}">All Products</a></li>
+                        <li><a href="{% url 'products:create' %}">Create Product</a></li>
+                    </ul>
+                </li> -->
                 <li>
                     <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Products</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{% url 'products:list' %}">All Products</a></li>
                         <li><a href="{% url 'products:create' %}">Create Product</a></li>
+                        <li><a href="{% url 'products:image_create' %}">Add Product Image</a></li>
+                        <li>
+                            <a href="#">Product Categories <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="#">All Categories</a>
+                                </li>
+                                <li>
+                                    <a href="#">Create Category</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Ingredients</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{% url 'ingredients:list' %}">All Ingredients</a></li>
+                        <li><a href="{% url 'ingredients:create' %}">Create Ingredient</a></li>
+                        <li>
+                            <a href="#">Ingredient Categories <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                              <li>
+                                <a href="{% url 'ingredients:category_list' %}">All Categories</a>
+                              </li>
+                              <li>
+                                <a href="{% url 'ingredients:create_category' %}">Create Category</a>
+                              </li>
+                            </ul>
+                        </li>
+                        <!-- <li>
+                            <a href="#"><span class="nav-label">Categories</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="{% url 'ingredients:category_list' %}">All Categories</a></li>
+                                <li><a href="{% url 'ingredients:create_category' %}">Create Category</a></li>
+                            </ul>
+                        </li> -->
                     </ul>
                 </li>
                 <li>

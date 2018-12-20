@@ -1,9 +1,14 @@
 from django.db import models
+from django.db.models.signals import pre_save
 from django.conf import settings
 from django.utils.text import slugify
 from django.core.urlresolvers import reverse
 
 from ingredients.models import Ingredient
+
+import random
+
+from string import ascii_lowercase
 
 # Create your models here.
 
@@ -19,16 +24,27 @@ class Product(models.Model):
     category = models.ManyToManyField('ProductCategory')
     ingredients = models.ManyToManyField(Ingredient)
 
-    def save(self, *args, **kwargs):
-        super(Product, self).save(*args, **kwargs)
-        self.slug = slugify(self.name)
-        self.save()
+    def get_single_image(self):
+        if self.productimage_set:
+            return self.productimage_set.first()
+        return None
+
+    # It will cause recursion error
+    # def save(self, *args, **kwargs):
+    #     super(Product, self).save(*args, **kwargs)
+    #     self.slug = slugify(self.name)
+    #     self.save()
 
     def get_absolute_url(self):
         return reverse('products:detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name
+
+def product_pre_save_receiver(sender, instance, *args, **kwargs):
+    instance.slug = slugify(instance.name)
+
+pre_save.connect(product_pre_save_receiver, sender=Product)
 
 
 def image_upload_to(instance, filename):
@@ -51,15 +67,15 @@ class ProductCategory(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(null=True, blank=True, unique=True)
-    parent_category = models.ForeignKey('ProductCategory', blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        super(ProductCategory, self).save(*args, **kwargs)
-        self.slug = slugify(self.name)
-        self.save()
+    parent_category = models.ForeignKey('self', blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+def product_category_pre_save_receiver(sender, instance, *args, **kwargs):
+    instance.slug = slugify(instance.name)
+
+pre_save.connect(product_category_pre_save_receiver, sender=ProductCategory)
 
 class Unit(models.Model):
     name = models.CharField(max_length=10)
