@@ -1,0 +1,50 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+          <div class="widget-text-box">
+              <h2 class="media-heading">Table Details</h2>
+              <br>
+              <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> -->
+              <table class="table">
+                <tr>
+                  <td><strong>Name:</strong></td>
+                  <td>{{ object.name }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Seats:</strong></td>
+                  <td>{{ object.seats }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Alignment:</strong></td>
+                  <td>{% if object.alignment == "L" %}Left{% else %}Right{% endif %}</td>
+                </tr>
+                <tr>
+                  <td><strong>Availability:</strong></td>
+                  <td>{% if object.available %}Available{% else %}Not Available{% endif %}</td>
+                </tr>
+                <tr>
+                  <td><strong>Activity:</strong></td>
+                  <td>{% if object.active %}Active{% else %}Not Active{% endif %}</td>
+                </tr>
+                <tr>
+                  <td><strong>Created At:</strong></td>
+                  <td>{{ object.created_at }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Updated At:</strong></td>
+                  <td>{% if object.updated_at %}{{ object.updated_at }}{% else %}Not Updated Yet{% endif %}</td>
+                </tr>
+              </table>
+              <div class="text-right">
+                  <a href="{% url 'restaurant:table_delete' pk=object.pk %}" class="btn btn-danger">Delete</a>
+                  <a href="{% url 'restaurant:table_edit' pk=object.pk %}" class="btn btn-primary">Edit Table</a>
+              </div>
+          </div>
+  </div>
+</div>
+
+
+{% endblock %}

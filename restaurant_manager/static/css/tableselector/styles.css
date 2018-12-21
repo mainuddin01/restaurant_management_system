@@ -1,0 +1,172 @@
+
+.booking {
+    background: hsl(11, 71%, 50%) none repeat scroll 0 0;
+    color: hsl(0, 0%, 100%);
+    display: inline-block;
+    font-size: 20px;
+    margin-top: 45px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    text-align: center;
+    width: 100%
+}
+.available {
+    background: hsl(36, 94%, 79%) none repeat scroll 0 0;
+    height: 25px;
+    text-indent: -9999px;
+    width: 100px
+}
+.booked {
+    background: #c1c0be;
+    height: 25px;
+    text-indent: -9999px;
+    width: 100px
+}
+.selected-seat {
+    background: #f2ae1b;
+    height: 25px;
+    text-indent: -9999px;
+    width: 100px
+}
+.note h2 {
+    color: hsl(0, 0%, 49%);
+    font-size: 16px;
+    padding-bottom: 10px;
+    padding-top: 10px
+}
+.note {
+    display: inline-block;
+    width: 100%
+}
+.model {
+    border: 1px solid hsl(0, 0%, 88%);
+    display: inline-block;
+    margin-top: 25px;
+    width: 100%
+}
+.column1,
+.column2,
+.column3,
+.column4 {
+    text-align: center
+}
+.name-table {
+    background: hsl(0, 2%, 51%) none repeat scroll 0 0;
+    display: inline-block;
+    float: left;
+    height: 140px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 35px
+}
+.name-table>h2 {
+    color: hsl(0, 0%, 100%);
+    font-size: 20px;
+    line-height: 140px;
+    text-align: center
+}
+.chart-left {
+    display: inline-block;
+    float: left;
+    width: 30px
+}
+.chart1 {
+    background: hsl(36, 94%, 79%) none repeat scroll 0 0;
+    color: #553a0f;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    margin-bottom: 13px;
+    text-align: center;
+    width: 30px;
+    cursor: pointer
+}
+.chart-right {
+    display: inline-block;
+    float: left;
+    width: 30px
+}
+.table-double {
+    display: inline-block;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 35px
+}
+.table-double1 {
+    background: hsl(0, 2%, 51%) none repeat scroll 0 0;
+    color: hsl(0, 0%, 100%);
+    font-size: 20px;
+    height: 64px;
+    line-height: 64px;
+    margin-bottom: 11px;
+    text-align: center
+}
+.table-double2 {
+    background: hsl(0, 2%, 51%) none repeat scroll 0 0;
+    color: hsl(0, 0%, 100%);
+    font-size: 20px;
+    height: 64px;
+    line-height: 64px;
+    text-align: center
+}
+.booked-color {
+    background: #c0bfbd;
+    pointer-events: none
+}
+.selected-color {
+    background: #ecb707
+}
+.table-A,
+.table-B,
+.table-CD,
+.table-EF,
+.table-GH,
+.table-IJ,
+.table-K,
+.table-L {
+    display: inline-block
+}
+.table-A,
+.table-CD,
+.table-GH,
+.table-K {
+    margin-bottom: 45px
+}
+.door>button {
+    background: hsl(0, 0%, 0%) none repeat scroll 0 0;
+    border: medium none;
+    bottom: -336px;
+    color: hsl(0, 0%, 100%);
+    font-size: 16px;
+    height: 35px;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    right: 0;
+    width: 200px
+}
+.door {
+    display: inline-block;
+    height: 100%;
+    text-align: center
+}
+.img-door {
+    height: 70px;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    right: 0;
+    width: 70px;
+    top: -1px
+}
+#alt_example_4_alt {
+    float: left;
+    padding: 10px;
+    width: 200px
+}
+#alt_example_4 {
+    float: left
+}

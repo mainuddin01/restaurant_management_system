@@ -1,0 +1,6 @@
+<form method="POST">
+  {% csrf_token %}
+  <h1>Are you sure! You want to delete {{ object.name }}</h1>
+  <a href="{% url 'restaurant:table_detail' pk=object.pk %}" class="btn btn-primary">Cancel</a>
+  <input type="submit" class="btn btn-danger" value="Delete">
+</form>

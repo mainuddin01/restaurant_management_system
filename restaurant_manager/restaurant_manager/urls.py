@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^employee/', include('django.contrib.auth.urls')),
     url(r'^products/', include('products.urls')),
     url(r'^ingredients/', include('ingredients.urls')),
+    url(r'^restaurant/', include('restaurant.urls')),
+    url(r'^carts/', include('carts.urls')),
 ]
 
 ##### for serving static and media files during development time

@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'employee_profiles',
     'ingredients',
     'products',
+    'restaurant',
+    'carts',
 ]
 
 

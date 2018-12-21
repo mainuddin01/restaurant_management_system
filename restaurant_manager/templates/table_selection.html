@@ -1,0 +1,163 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+      <!-- <link href="{% static 'css/tableselector/bootstrap.min.css' %}" rel='stylesheet' type='text/css' /> -->
+      <link href="{% static 'css/tableselector/styles.css' %}" rel="stylesheet" type="text/css" />
+      <link href="{% static 'css/tableselector/responsive.css' %}" rel="stylesheet" type="text/css" />
+      <script src="{% static 'js/tableselector/jquery-1.12.0.min.js' %}"></script>
+      <!-- <script src="js/bootstrap.min.js"></script> -->
+      <script src="{% static 'js/tableselector/jquery-ui.min.js' %}"></script>
+      <script src="{% static 'js/tableselector/main.js' %}"></script>
+
+      <style media="screen">
+        #page-wrapper {
+          background: #fff;
+        }
+        h2.table-name {
+          line-height: 10px;
+          -webkit-transform: rotate(90deg);
+          -moz-transform: rotate(90deg);
+          -ms-transform: rotate(90deg);
+          -o-transform: rotate(90deg);
+        }
+      </style>
+
+
+
+	 <!-- Start Book Content -->
+      <div class="book-content">
+         <div class="container">
+           <div class="row">
+
+             <div class="col-md-12 col-sm-12 col-xs-12">
+               <!-- Start Booking -->
+               <div class="booking">
+                 <h2>Select Table</h2>
+               </div>
+               <div class="row">
+                 <div class="col-md-2 col-sm-4 col-xs-4">
+                   <h2>Available Seat</h2>
+                   <div class="available">1</div>
+                 </div>
+                 <div class="col-md-2 col-sm-4 col-xs-4">
+                   <h2>Booked Seat</h2>
+                   <div class="booked">1</div>
+                 </div>
+                 <div class="col-md-2 col-sm-4 col-xs-4">
+                   <h2>Selected Seat</h2>
+                   <div class="selected-seat">1</div>
+                 </div>
+               </div>
+
+
+
+
+              <div class="model">
+                <div class="row">
+
+                  <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="row">
+                      {% for table in left_tables %}
+                      <div class="col-md-6 col-sm-6 col-xs-6 column1">
+
+                        <a href="{% url 'carts:table_user' pk=table.pk %}">
+
+                          <div class="table-A">
+                            <div class="chart-left">
+                              <div class="chart1">1
+                              </div>
+                              <div class="chart1 booked-color">3
+                              </div>
+                              <div class="chart1">5
+                              </div>
+                              <div class="chart1 booked-color">7
+                              </div>
+                            </div>
+                            <div class="name-table">
+                              <h2 class="table-name">{{ table.name }}</h2>
+                            </div>
+                            <div class="chart-right">
+                              <div class="chart1 booked-color">2
+                              </div>
+                              <div class="chart1 booked-color">4
+                              </div>
+                              <div class="chart1 booked-color">6
+                              </div>
+                              <div class="chart1">8
+                              </div>
+                            </div>
+                          </div>
+
+                        </a>
+
+
+                      </div>
+                      {% endfor %}
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-md-4 col-sm-12 col-xs-12 door ">
+                    <img class="img-responsive img-door" src="{% static 'img/tableselector/door.png' %}" alt="door"/>
+                    <button>Reception</button>
+                  </div>
+
+
+                  <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="row">
+                      {% for table in left_tables %}
+                      <div class="col-md-6 col-sm-6 col-xs-6 column1">
+
+                        <a href="{% url 'carts:table_user' pk=table.pk %}">
+
+                          <div class="table-A">
+                            <div class="chart-left">
+                              <div class="chart1">1
+                              </div>
+                              <div class="chart1 booked-color">3
+                              </div>
+                              <div class="chart1">5
+                              </div>
+                              <div class="chart1 booked-color">7
+                              </div>
+                            </div>
+                            <div class="name-table">
+                              <h2 class="table-name">{{ table.name }}</h2>
+                            </div>
+                            <div class="chart-right">
+                              <div class="chart1 booked-color">2
+                              </div>
+                              <div class="chart1 booked-color">4
+                              </div>
+                              <div class="chart1 booked-color">6
+                              </div>
+                              <div class="chart1">8
+                              </div>
+                            </div>
+                          </div>
+
+                        </a>
+
+
+                      </div>
+                      {% endfor %}
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+              </div>
+               <!-- End Booking -->
+
+             </div>
+           </div>
+
+         </div>
+      </div>
+	 <!-- End Book Content -->
+
+{% endblock %}
