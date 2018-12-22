@@ -63,15 +63,30 @@
                             <div class="col-lg-4">
                                 <div class="panel panel-warning">
                                     <div class="panel-heading">
-                                         Danger Panel with Footer
+                                         Item in {{ customer.name }}{% if customer.name == "Anonymous" %}-{{ forloop.counter }}{% endif %} customers cart
                                     </div>
                                     <div class="panel-body">
-                                        Hi {{ customer.name }}
-
-                                        <p>Cart id = {{ customer.get_cart }}</p>
+                                        <table class="table">
+                                          <tr>
+                                            <td>Cart Item</td>
+                                            <td>Quantity</td>
+                                            <td>Total</td>
+                                            <td>Remove</td>
+                                          </tr>
+                                          {% for cart_item in customer.get_cart_item.all %}
+                                          <tr id="cart-item-{{ cart_item.id }}">
+                                            <td>{{ cart_item.item.name }}</td>
+                                            <td><form action="." method="GET">
+                                              <input type="hidden" name="item" value="{{ cart_item.id }}"><input class="cart-item" type="number" name="qty" value="{{ cart_item.quantity }}" class="form-control">
+                                            </form></td>
+                                            <td id="cart-line-total-{{ cart_item.id }}">{{ cart_item.line_total }}</td>
+                                            <td class="text-right"><a href="#">X</a></td>
+                                          </tr>
+                                          {% endfor %}
+                                        </table>
                                     </div>
-                                    <div class="panel-footer">
-                                        Panel Footer
+                                    <div class="panel-footer text-right">
+                                          <a href="#" class="btn btn-sm btn-danger">Cancel</a> <a href="#" class="btn btn-sm btn-success">Order</a> <a href="#" class="btn btn-sm btn-primary">Served</a> <a href="#" class="btn btn-sm btn-info">Completed</a>
                                     </div>
                                 </div>
 
@@ -213,13 +228,12 @@
                                                           Many desktop publishing packages and web page editors now.
                                                       </div>
                                                       <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                          <form class="add-to-cart" action="." method="GET">
-                                                            <input type="hidden" name="cart_id" value="{{ customer.get_cart }}">
-                                                            <input type="hidden" name="item_id" value="{{ product.id }}">
-                                                            <input type="submit" class="btn btn-primary" value="Add to Cart">
-                                                          </form>
+                                                            <form class="add-to-cart" action="." method="GET">
+                                                              <input type="hidden" name="cart_id" value="{{ customer.get_cart }}">
+                                                              <input type="hidden" name="item_id" value="{{ product.id }}">
+                                                              <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                                                              <input type="submit" class="btn btn-xs btn-outline btn-primary pull-right" value="Add to Cart">
+                                                            </form>
                                                       </div>
                                                   </div>
                                               </div>
@@ -291,6 +305,32 @@
 
           $('.footable').footable();
 
+      });
+
+
+      $(".cart-item").change(function(){
+        var item = $(this).prev("input[type='hidden']").val();
+        var qty = $(this).val();
+        data = {
+          item: item,
+          qty: qty
+        }
+        console.log(data);
+        $.ajax({
+          type: "GET",
+          url: ".",
+          data: data,
+          success: function(data){
+            if(data.deleted){
+              $("#cart-item-" + item).fadeOut();
+            }
+            $("#cart-line-total-" + item).text(data.item_line_total);
+          },
+          error: function(error, response){
+            console.log(error);
+            console.log(response);
+          }
+        });
       });
 
   </script>

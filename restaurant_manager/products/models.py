@@ -24,6 +24,11 @@ class Product(models.Model):
     category = models.ManyToManyField('ProductCategory')
     ingredients = models.ManyToManyField(Ingredient)
 
+    def get_price(self):
+        if self.sale_price:
+            return self.sale_price
+        return self.price
+
     def get_single_image(self):
         if self.productimage_set:
             return self.productimage_set.first()
