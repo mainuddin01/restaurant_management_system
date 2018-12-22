@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from carts.models import Cart
+
 # Create your models here.
 class Table(models.Model):
     LEFT = 'L'
@@ -36,6 +38,13 @@ class Customer(models.Model):
     members = models.PositiveSmallIntegerField(default=1)
     mobile = models.CharField(max_length=11, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
+    active = models.BooleanField(default=True)
+
+    def get_cart(self):
+        return Cart.objects.filter(customer=self.id).first()
+
+    def get_absolute_url(self):
+        return reverse('restaurant:customer_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name

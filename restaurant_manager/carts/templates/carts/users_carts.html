@@ -1,6 +1,8 @@
 {% extends 'dashboard_base.html' %}
 {% load static %}
 
+{% load widget_tweaks %}
+
 {% block stylesheet %}
   <!-- FooTable -->
   <link href="{% static 'css/plugins/footable/footable.core.css' %}" rel="stylesheet">
@@ -47,12 +49,14 @@
         <div class="col-lg-12">
             <div class="tabs-container">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> This is tab</a></li>
-                    <li><a class="nav-link" data-toggle="tab" href="#tab-2">This is second tab</a></li>
-                    <li><a class="btn btn-primary" href="#">Add User +</a></li>
+                    {% for customer in active_customers %}
+                      <li><a class="nav-link {% if forloop.counter == 1 %}active{% endif %}" data-toggle="tab" href="#tab-{{ customer.id }}"> {{ customer.name }}{% if customer.name == "Anonymous" %}-{{ forloop.counter }}{% endif %}</a></li>
+                    {% endfor %}
+                    <li><a class="btn btn-primary" data-toggle="modal" data-target="#myModal2">Add User +</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" id="tab-1" class="tab-pane active">
+                  {% for customer in active_customers %}
+                    <div role="tabpanel" id="tab-{{ customer.id }}" class="tab-pane {% if forloop.counter == 1 %}active{% endif %}">
                         <div class="panel-body">
 
                           <div class="row">
@@ -62,132 +66,133 @@
                                          Danger Panel with Footer
                                     </div>
                                     <div class="panel-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                                        Hi {{ customer.name }}
+
+                                        <p>Cart id = {{ customer.get_cart }}</p>
                                     </div>
                                     <div class="panel-footer">
                                         Panel Footer
                                     </div>
                                 </div>
+
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                         Chat With Kitchen Manager
+                                    </div>
+                                    <div class="panel-body">
+
+                                      <div class="ibox ">
+
+                                          <div class="ibox-content">
+
+                                              <div>
+                                      <div class="chat-activity-list">
+
+                                          <div class="chat-element">
+                                              <a href="#" class="float-left">
+                                                  <img alt="image" class="rounded-circle" src="{% static 'img/a2.jpg' %}">
+                                              </a>
+                                              <div class="media-body ">
+                                                  <small class="float-right text-navy">1m ago</small>
+                                                  <strong>Mike Smith</strong>
+                                                  <p class="m-b-xs">
+                                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                                                  </p>
+                                                  <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                                              </div>
+                                          </div>
+
+                                          <div class="chat-element right">
+                                              <a href="#" class="float-right">
+                                                  <img alt="image" class="rounded-circle" src="{% static 'img/a4.jpg' %}">
+                                              </a>
+                                              <div class="media-body text-right ">
+                                                  <small class="float-left">5m ago</small>
+                                                  <strong>John Smith</strong>
+                                                  <p class="m-b-xs">
+                                                      Lorem Ipsum is simply dummy text of the printing.
+                                                  </p>
+                                                  <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                                              </div>
+                                          </div>
+
+                                          <div class="chat-element ">
+                                              <a href="#" class="float-left">
+                                                  <img alt="image" class="rounded-circle" src="{% static 'img/a2.jpg' %}">
+                                              </a>
+                                              <div class="media-body ">
+                                                  <small class="float-right">2h ago</small>
+                                                  <strong>Mike Smith</strong>
+                                                  <p class="m-b-xs">
+                                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                                                  </p>
+                                                  <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      </div>
+                                              <div class="chat-form">
+                                                  <form role="form">
+                                                      <div class="form-group">
+                                                          <textarea class="form-control" placeholder="Message"></textarea>
+                                                      </div>
+                                                      <div class="text-right">
+                                                          <button type="submit" class="btn btn-sm btn-primary m-t-n-xs"><strong>Send message</strong></button>
+                                                      </div>
+                                                  </form>
+                                              </div>
+                                      </div>
+                                      </div>
+
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div class="col-lg-8">
 
+                              <div class="ibox-content m-b-sm border-bottom">
+                                <form action="." method="GET">
+
                                   <div class="row">
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
+                                    <div class="col-sm-3">
+                                      <div class="form-group">
+                                        <!-- <label class="col-form-label" for="product_name">Product name:</label> -->
+                                        {% render_field product_filter.form.name class="form-control" placeholder="Product name" %}
                                       </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                      <div class="form-group">
+                                        <!-- <label class="col-form-label" for="price">Min price</label> -->
+                                        {% render_field product_filter.form.min_price class="form-control" placeholder="Min price" %}
                                       </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box active">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                      <div class="form-group">
+                                        <!-- <label class="col-form-label" for="price">Max price</label> -->
+                                        {% render_field product_filter.form.max_price class="form-control" placeholder="Max price" %}
                                       </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <div class="form-group">
+                                        <!-- <label class="col-form-label" for="status">Product category</label> -->
+                                        {% render_field product_filter.form.category class="form-control" placeholder="Product category" %}
                                       </div>
-
-
-
-
-
-
+                                    </div>
+                                    <div class="col-sm-1">
+                                      <div class="form-group">
+                                        <!-- <label class="col-form-label" for="product_name">Product name:</label> -->
+                                        <input type="submit" value="Filter" class="btn btn-primary">
+                                      </div>
+                                    </div>
                                   </div>
+
+                                </form>
+
+                              </div>
+
                                   <div class="row">
+                                    {% for product in product_filter.qs %}
                                       <div class="col-md-3">
                                           <div class="ibox">
                                               <div class="ibox-content product-box">
@@ -197,10 +202,10 @@
                                                   </div>
                                                   <div class="product-desc">
                                                       <span class="product-price">
-                                                          $10
+                                                          ${{ product.price }}
                                                       </span>
                                                       <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
+                                                      <a href="#" class="product-name"> {{ product.name }}</a>
 
 
 
@@ -210,203 +215,17 @@
                                                       <div class="m-t text-righ">
 
                                                           <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                                                          <form class="add-to-cart" action="." method="GET">
+                                                            <input type="hidden" name="cart_id" value="{{ customer.get_cart }}">
+                                                            <input type="hidden" name="item_id" value="{{ product.id }}">
+                                                            <input type="submit" class="btn btn-primary" value="Add to Cart">
+                                                          </form>
                                                       </div>
                                                   </div>
                                               </div>
                                           </div>
                                       </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-
-                                  </div>
-                                  <div class="row">
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="ibox">
-                                              <div class="ibox-content product-box">
-
-                                                  <div class="product-imitation">
-                                                      [ INFO ]
-                                                  </div>
-                                                  <div class="product-desc">
-                                                      <span class="product-price">
-                                                          $10
-                                                      </span>
-                                                      <small class="text-muted">Category</small>
-                                                      <a href="#" class="product-name"> Product</a>
-
-
-
-                                                      <div class="small m-t-xs">
-                                                          Many desktop publishing packages and web page editors now.
-                                                      </div>
-                                                      <div class="m-t text-righ">
-
-                                                          <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
+                                      {% endfor %}
 
                                   </div>
 
@@ -420,17 +239,7 @@
 
                         </div>
                     </div>
-                    <div role="tabpanel" id="tab-2" class="tab-pane">
-                        <div class="panel-body">
-                            <strong>Donec quam felis</strong>
-
-                            <p>Thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects
-                                and flies, then I feel the presence of the Almighty, who formed us in his own image, and the breath </p>
-
-                            <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                        </div>
-                    </div>
+                  {% endfor %}
                 </div>
 
 
@@ -443,6 +252,29 @@
 
 
 
+</div>
+
+
+<div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Modal title</h4>
+                <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+            </div>
+            <form action="{% url 'restaurant:customer_create' pk=table_id %}" method="POST">
+              <div class="modal-body">
+                    {% csrf_token %}
+                    {{ customer_form.as_p }}
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 

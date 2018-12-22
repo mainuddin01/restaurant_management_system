@@ -22,11 +22,10 @@ class CustomerForm(forms.ModelForm):
 
     class Meta():
         model = Customer
-        exclude = ('created_at',)
+        exclude = ('table', 'created_at')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['table'].widget.attrs.update({'class': 'form-control'})
         self.fields['type'].widget.attrs.update({'class': 'form-control'})
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['members'].widget.attrs.update({'class': 'form-control'})
