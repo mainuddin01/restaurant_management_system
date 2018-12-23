@@ -66,7 +66,7 @@
                                          Item in {{ customer.name }}{% if customer.name == "Anonymous" %}-{{ forloop.counter }}{% endif %} customers cart
                                     </div>
                                     <div class="panel-body">
-                                        <table class="table">
+                                        <table class="table cart-item-table">
                                           <tr>
                                             <td>Cart Item</td>
                                             <td>Quantity</td>
@@ -228,12 +228,12 @@
                                                           Many desktop publishing packages and web page editors now.
                                                       </div>
                                                       <div class="m-t text-righ">
-                                                            <form class="add-to-cart" action="." method="GET">
-                                                              <input type="hidden" name="cart_id" value="{{ customer.get_cart }}">
-                                                              <input type="hidden" name="item_id" value="{{ product.id }}">
-                                                              <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                                              <input type="submit" class="btn btn-xs btn-outline btn-primary pull-right" value="Add to Cart">
-                                                            </form>
+                                                            <!-- <form class="add-to-cart" action="." method="GET"> -->
+                                                              <!-- <input type="hidden" name="cart_id" value="{{ customer.get_cart }}">
+                                                              <input type="hidden" name="item_id" value="{{ product.id }}"> -->
+                                                              <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i></a>
+                                                              <button onclick="addToCart({{customer.get_cart}}, {{product.id}})" id="cart-btn" data-cart="{{ customer.get_cart }}" data-item="Hello" class="btn btn-xs btn-outline btn-primary pull-right">Add to Cart</button>
+                                                            <!-- </form> -->
                                                       </div>
                                                   </div>
                                               </div>
@@ -308,9 +308,46 @@
       });
 
 
+      function addToCart(cart_id, product_id){
+        var data = {cart_id: cart_id, item_id: product_id}
+        $.ajax({
+          type: "GET",
+          url: ".",
+          data: data,
+          success: function(data){
+            console.log(data.item_added_to_cart);
+            if(data.item_added_to_cart){
+              item_data = data.cart_item_data
+              $(".cart-item-table").append(
+                '<tr id="cart-item-' + item_data.cart_item + '"><td>' + item_data.cart_item_name + '</td><td><form action="." method="GET"><input type="hidden" name="item" value="' + item_data.cart_item + '"><input class="cart-item" type="number" name="qty" value="' + item_data.cart_item_quantity + '" class="form-control"></form></td><td id="cart-line-total-' + item_data.cart_item + '">' + item_data.cart_item_line_total + '</td><td class="text-right"><a href="#">X</a></td></tr>'
+              );
+              console.log(item_data);
+            }
+          },
+          error: function(error, response){
+            console.log(error);
+            console.log(response);
+          }
+        });
+      }
+
+      // $("#add-cart-btn").click(function(event){
+      //   event.preventDefault();
+      //   var data = $(".add-to-cart").serialize();
+      //   console.log(data);
+      // });
+
+    //   $("#add-cart-btn").click(function(event){
+    //   event.preventDefault();
+    //   var formData = $(".add-to-cart").serialize();
+    //   console.log(formData);
+    // });
+
+
       $(".cart-item").change(function(){
         var item = $(this).prev("input[type='hidden']").val();
         var qty = $(this).val();
+        console.log(qty);
         data = {
           item: item,
           qty: qty

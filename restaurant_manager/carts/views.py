@@ -38,34 +38,38 @@ class TableUserView(LoginRequiredMixin, View):
 
         cart_id = request.GET.get('cart_id')
         item_id = request.GET.get('item_id')
+        item_added_to_cart = False
+        cart_item_data = None
 
         if cart_id and item_id:
             cart = get_object_or_404(Cart, id=cart_id)
             item = get_object_or_404(Product, id=item_id)
             try:
-                cart_item = CartItem.objects.get_or_create(cart=cart, item=item)[0]
+                cart_item, item_added_to_cart = CartItem.objects.get_or_create(cart=cart, item=item)
+                cart_item_data = {'cart_item': cart_item.id, 'cart_item_name': cart_item.item.name, 'cart_item_quantity': cart_item.quantity, 'cart_item_line_total': cart_item.line_total}
             except:
                 raise Http404
 
-        if request.is_ajax():
-            cart_item_id = request.GET.get('item')
-            item_qty = request.GET.get('qty')
-            item_qty = int(item_qty)
+        cart_item_id = request.GET.get('item')
+        item_qty = request.GET.get('qty')
 
-            if cart_item_id:
-                cart_item = get_object_or_404(CartItem, id=cart_item_id)
-                updated = False
-                deleted = False
-                item_line_total = 0.00
-                if item_qty > 0:
-                    cart_item.quantity = item_qty
-                    updated_item = cart_item.save()
-                    print(updated_item)
-                    item_line_total = updated_item.line_total
-                else:
-                    cart_item.delete()
-                    deleted = True
-                return JsonResponse({'updated': updated, 'deleted': deleted, 'item_line_total': item_line_total})
+        updated = False
+        deleted = False
+        item_line_total = 0.00
+
+        if cart_item_id:
+            cart_item = get_object_or_404(CartItem, id=cart_item_id)
+            item_qty = int(item_qty)
+            if item_qty > 0:
+                cart_item.quantity = item_qty
+                updated_item = cart_item.save()
+                item_line_total = updated_item.line_total
+            else:
+                cart_item.delete()
+                deleted = True
+
+        if request.is_ajax():
+                return JsonResponse({'updated': updated, 'deleted': deleted, 'item_line_total': item_line_total, 'item_added_to_cart': item_added_to_cart, 'cart_item_data': cart_item_data})
 
         context = {
             'mininavbar': True,
